@@ -4,7 +4,8 @@ final class ApiService: ApiServiceProtocol {
     
     func getCommerces(completion: @escaping (Result<[Commerce], Error>) -> Void) {
         
-        let stringURL = "https://waylet-web-export.s3.eu-west-1.amazonaws.com/commerces.json"
+//        let stringURL = "https://waylet-web-export.s3.eu-west-1.amazonaws.com/commerces.json"
+        let stringURL = "https://raw.githubusercontent.com/juanantoniocarrasco/CommercesApp/main/apijson.json"
 
         guard let url = URL(string: stringURL) else { return }
         
