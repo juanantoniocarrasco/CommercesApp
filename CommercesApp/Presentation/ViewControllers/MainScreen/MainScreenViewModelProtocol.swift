@@ -1,0 +1,3 @@
+protocol MainScreenViewModelProtocol {
+    func viewDidLoad()
+}
