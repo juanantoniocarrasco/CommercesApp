@@ -64,8 +64,8 @@ final class MainScreenTableViewCellView: UIView {
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 28).isActive = true
         return imageView
     }()
     
@@ -152,7 +152,7 @@ final class MainScreenTableViewCellView: UIView {
     
     func configure(with model: Model) {
         headerStackViewContainer.backgroundColor = model.category.color
-        iconImageView.image = model.category.icon
+        iconImageView.image = model.category.iconWhite
         distanceLabel.text = model.distance
         commerceImageView.image = model.image
         titleLabel.text = model.title

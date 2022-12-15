@@ -17,6 +17,7 @@ final class MainScreenViewController: UIViewController {
     
     lazy var headerView: MainScreenHeaderView = {
         let view = MainScreenHeaderView()
+        view.delegate = self
         return view
     }()
     
@@ -46,6 +47,7 @@ final class MainScreenViewController: UIViewController {
     }()
     
     private let viewModel: MainScreenViewModelProtocol
+    var categorySelected: CommerceCategory?
     
     init(viewModel:MainScreenViewModelProtocol) {
         self.viewModel = viewModel
@@ -112,4 +114,12 @@ extension MainScreenViewController: UITableViewDataSource {
 
 extension MainScreenViewController: UITableViewDelegate {
     
+}
+
+extension MainScreenViewController: MainScreenHeaderViewDelegate {
+    
+    func categorySelected(_ categorySelected: CommerceCategory) {
+        self.categorySelected = categorySelected
+        viewModel.categorySelected(categorySelected)
+    }
 }

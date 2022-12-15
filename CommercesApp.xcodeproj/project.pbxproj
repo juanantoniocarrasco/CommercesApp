@@ -29,6 +29,7 @@
 		98581B552949D97A005E24FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98581B532949D97A005E24FE /* LaunchScreen.storyboard */; };
 		98660CE3294A239300EC85E4 /* MainScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98660CE2294A239300EC85E4 /* MainScreenTableViewCell.swift */; };
 		98660CE5294A275E00EC85E4 /* CommerceCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98660CE4294A275E00EC85E4 /* CommerceCategory.swift */; };
+		98660CE8294B39C900EC85E4 /* MainScreenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98660CE7294B39C900EC85E4 /* MainScreenCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		98581B562949D97A005E24FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98660CE2294A239300EC85E4 /* MainScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTableViewCell.swift; sourceTree = "<group>"; };
 		98660CE4294A275E00EC85E4 /* CommerceCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommerceCategory.swift; sourceTree = "<group>"; };
+		98660CE7294B39C900EC85E4 /* MainScreenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			children = (
 				9804B4502949F81F0081FF7D /* MainScreenHeaderView.swift */,
 				98660CE2294A239300EC85E4 /* MainScreenTableViewCell.swift */,
+				98660CE7294B39C900EC85E4 /* MainScreenCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				98660CE3294A239300EC85E4 /* MainScreenTableViewCell.swift in Sources */,
 				9804B43E2949E8980081FF7D /* ApiService.swift in Sources */,
 				9804B44B2949ECF00081FF7D /* ApiServiceProtocol.swift in Sources */,
+				98660CE8294B39C900EC85E4 /* MainScreenCollectionViewCell.swift in Sources */,
 				9804B4512949F81F0081FF7D /* MainScreenHeaderView.swift in Sources */,
 				98581B4B2949D979005E24FE /* SceneDelegate.swift in Sources */,
 			);
