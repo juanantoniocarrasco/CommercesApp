@@ -125,6 +125,7 @@ extension MainScreenHeaderView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let categorySelected = CommerceCategory.allCases[indexPath.row]
         delegate?.categorySelected(categorySelected)
+        
     }
 }
 

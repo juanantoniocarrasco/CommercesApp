@@ -5,5 +5,5 @@ protocol MainScreenViewModelProtocol {
     func viewDidLoad()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    func categorySelected(_ categorySelected: CommerceCategory)
+    func categorySelected(_ categorySelected: CommerceCategory, isCurrentCategory: Bool)
 }

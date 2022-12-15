@@ -54,8 +54,11 @@ final class MainScreenTableViewCellView: UIView {
     private lazy var headerStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             iconImageView,
-            UIView(),
+            SpacerView(axis: .horizontal, space: 4),
+            titleLabel,
+            SpacerView(axis: .horizontal, minimumSpace: 4),
             distanceLabel,
+            SpacerView(axis: .horizontal, space: 4),
             rightArrowImageView
         ])
         return stackView
@@ -69,10 +72,17 @@ final class MainScreenTableViewCellView: UIView {
         return imageView
     }()
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textColor = .white
+        return label
+    }()
+    
     private let distanceLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 16)
         return label
     }()
     
@@ -81,8 +91,8 @@ final class MainScreenTableViewCellView: UIView {
         let image = UIImage(named: "Arrow_right")?.withRenderingMode(.alwaysTemplate)
         imageView.image = image
         imageView.tintColor = .white
-        imageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -116,7 +126,6 @@ final class MainScreenTableViewCellView: UIView {
     private lazy var bodyLabelsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             SpacerView(axis: .vertical, space: 16),
-            titleLabel,
             subtitleLabel,
             SpacerView(axis: .vertical, minimumSpace: 16)
         ])
@@ -124,15 +133,9 @@ final class MainScreenTableViewCellView: UIView {
         return stackView
     }()
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        return label
-    }()
-    
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12, weight: .light)
+        label.font = .systemFont(ofSize: 14)
         label.numberOfLines = 0
         return label
     }()

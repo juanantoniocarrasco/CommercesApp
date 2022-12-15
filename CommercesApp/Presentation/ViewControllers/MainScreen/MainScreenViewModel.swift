@@ -20,7 +20,13 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
         getCommerces()
     }
     
-    func categorySelected(_ categorySelected: CommerceCategory) {
+    func categorySelected(_ categorySelected: CommerceCategory, isCurrentCategory: Bool) {
+        if isCurrentCategory  {
+            filteredCommerceList = []
+            state.wrappedValue = .commerceListLoaded(commerceList: commerceList)
+            return
+        }
+        
         var filteredCommerceList: [Commerce] = []
         switch categorySelected {
             case .gasStation:

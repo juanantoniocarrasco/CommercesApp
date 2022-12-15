@@ -15,7 +15,7 @@ final class MainScreenViewController: UIViewController {
         return stackView
     }()
     
-    lazy var headerView: MainScreenHeaderView = {
+    private lazy var headerView: MainScreenHeaderView = {
         let view = MainScreenHeaderView()
         view.delegate = self
         return view
@@ -31,7 +31,7 @@ final class MainScreenViewController: UIViewController {
         return tableView
     }()
 
-    lazy var screenTitleView: UIView = {
+    private lazy var screenTitleView: UIView = {
         let view = UIView()
         view.fill(with: screenTitleLabel, edges: .init(allEdges: 24))
         view.backgroundColor = .white
@@ -109,7 +109,6 @@ extension MainScreenViewController: UITableViewDataSource {
         return cell
     }
     
-    
 }
 
 extension MainScreenViewController: UITableViewDelegate {
@@ -119,7 +118,8 @@ extension MainScreenViewController: UITableViewDelegate {
 extension MainScreenViewController: MainScreenHeaderViewDelegate {
     
     func categorySelected(_ categorySelected: CommerceCategory) {
-        self.categorySelected = categorySelected
-        viewModel.categorySelected(categorySelected)
+        let isCurrentCategory = categorySelected == self.categorySelected
+        viewModel.categorySelected(categorySelected, isCurrentCategory: isCurrentCategory)
+        self.categorySelected = categorySelected == self.categorySelected ? nil : categorySelected
     }
 }
