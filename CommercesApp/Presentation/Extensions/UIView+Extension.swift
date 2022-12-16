@@ -6,7 +6,7 @@ extension UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: edges.top),
+            view.topAnchor.constraint(equalTo: topAnchor, constant: edges.top),
             view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: edges.left),
             view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -edges.right),
             view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -edges.bottom)
@@ -24,14 +24,26 @@ extension UIView {
         ])
     }
     
+    func fillToSafeAreaInTop(with view: UIView, edges: UIEdgeInsets = .zero) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        NSLayoutConstraint.activate([
+            safeAreaLayoutGuide.topAnchor.constraint(equalTo: view.topAnchor, constant: -edges.top),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: edges.bottom),
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -edges.left),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: edges.right)
+        ])
+    }
+    
 }
-
 
 extension UIView {
+    
     func addShadow() {
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.3
+        layer.shadowOpacity = 0.07
         layer.shadowOffset = CGSize(width: 0, height: 3)
-        layer.shadowRadius = 2
+        layer.shadowRadius = 3
     }
 }
+

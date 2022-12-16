@@ -19,5 +19,11 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Necesitamos tu posición para poder mostrarte los comercios y EESS que tienes a tu alrededor</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Necesitamos tu posición para poder mostrarte los comercios y EESS que tienes a tu alrededor</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Necesitamos tu posición para poder mostrarte los comercios y EESS que tienes a tu alrededor</string>
 </dict>
 </plist>

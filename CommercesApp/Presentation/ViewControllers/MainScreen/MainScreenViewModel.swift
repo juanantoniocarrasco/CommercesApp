@@ -4,6 +4,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     
     enum State {
         case commerceListLoaded(commerceList: [Commerce])
+        case tableCellSelected(for: Commerce)
     }
     
     var state: Observable<State?> = .init(wrappedValue: nil)
@@ -114,4 +115,18 @@ extension MainScreenViewModel {
                                    subtitle: commerce.openingHours))
         return cell
     }
+
 }
+
+// MARK: - TableViewDelegate
+
+extension MainScreenViewModel {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
+        let commerceList = filteredCommerceList.isEmpty ? commerceList : filteredCommerceList
+        let commerce = commerceList[indexPath.row]
+        state.wrappedValue = .tableCellSelected(for: commerce)
+        
+    }
+}
+

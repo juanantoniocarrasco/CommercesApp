@@ -34,7 +34,7 @@ final class MainScreenCollectionViewCellView: UIView {
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             imageView,
-            SpacerView(axis: .horizontal, space: 4),
+            SpacerView(axis: .horizontal, space: 8),
             titleLabel
         ])
         return stackView
@@ -42,15 +42,15 @@ final class MainScreenCollectionViewCellView: UIView {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13, weight: .semibold)
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
         return label
     }()
         

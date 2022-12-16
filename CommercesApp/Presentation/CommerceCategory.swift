@@ -14,17 +14,17 @@ enum CommerceCategory: String, CaseIterable {
             case .gasStation:
                 return .orange
             case .restaurant:
-                return .yellow
+                return .restaurantColor
             case .leisure:
-                return .systemBlue
+                return .leisureColor
             case .shopping:
                 return .systemPink
             case .electricStation:
-                return .orange
+                return .systemBlue
             case .directSales:
-                return .orange
+                return .systemGreen
             case .beauty:
-                return .orange
+                return .systemPurple
         }
     }
     

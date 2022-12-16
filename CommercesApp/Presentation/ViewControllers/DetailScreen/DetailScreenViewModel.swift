@@ -6,4 +6,7 @@ final class DetailScreenViewModel: DetailScreenViewModelProtocol {
         self.commerce = commerce
     }
     
+    func getCommerceLocation() -> [Double] {
+        commerce.location
+    }
 }

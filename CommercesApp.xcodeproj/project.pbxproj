@@ -30,6 +30,9 @@
 		98660CE3294A239300EC85E4 /* MainScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98660CE2294A239300EC85E4 /* MainScreenTableViewCell.swift */; };
 		98660CE5294A275E00EC85E4 /* CommerceCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98660CE4294A275E00EC85E4 /* CommerceCategory.swift */; };
 		98660CE8294B39C900EC85E4 /* MainScreenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98660CE7294B39C900EC85E4 /* MainScreenCollectionViewCell.swift */; };
+		987DA593294C6C650065426C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA592294C6C650065426C /* UIColor+Extension.swift */; };
+		987DA595294C8AE20065426C /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA594294C8AE20065426C /* SpinnerViewController.swift */; };
+		987DA598294CA3580065426C /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA597294CA3580065426C /* SectionHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,9 @@
 		98660CE2294A239300EC85E4 /* MainScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTableViewCell.swift; sourceTree = "<group>"; };
 		98660CE4294A275E00EC85E4 /* CommerceCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommerceCategory.swift; sourceTree = "<group>"; };
 		98660CE7294B39C900EC85E4 /* MainScreenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCollectionViewCell.swift; sourceTree = "<group>"; };
+		987DA592294C6C650065426C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		987DA594294C8AE20065426C /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
+		987DA597294CA3580065426C /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 			children = (
 				9804B4312949E8980081FF7D /* UIView+Extension.swift */,
 				9804B4322949E8980081FF7D /* UIEdgeInsets+Extension.swift */,
+				987DA592294C6C650065426C /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -122,6 +129,7 @@
 			children = (
 				9804B4342949E8980081FF7D /* SpacerView.swift */,
 				9804B4522949F9290081FF7D /* InfoView.swift */,
+				987DA594294C8AE20065426C /* SpinnerViewController.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -149,6 +157,7 @@
 		9804B4392949E8980081FF7D /* DetailScreen */ = {
 			isa = PBXGroup;
 			children = (
+				987DA596294CA3480065426C /* Views */,
 				9804B43B2949E8980081FF7D /* DetailScreenViewController.swift */,
 				9804B43A2949E8980081FF7D /* DetailScreenViewModel.swift */,
 				9804B44D2949F1920081FF7D /* DetailScreenViewModelProtocol.swift */,
@@ -212,6 +221,14 @@
 				9804B455294A090F0081FF7D /* Observable.swift */,
 			);
 			path = Observable;
+			sourceTree = "<group>";
+		};
+		987DA596294CA3480065426C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				987DA597294CA3580065426C /* SectionHeaderView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +304,7 @@
 				9804B4452949E8980081FF7D /* DetailScreenViewModel.swift in Sources */,
 				9804B4402949E8980081FF7D /* UIView+Extension.swift in Sources */,
 				98660CE5294A275E00EC85E4 /* CommerceCategory.swift in Sources */,
+				987DA593294C6C650065426C /* UIColor+Extension.swift in Sources */,
 				98581B492949D979005E24FE /* AppDelegate.swift in Sources */,
 				9804B43F2949E8980081FF7D /* Commerce.swift in Sources */,
 				9804B456294A090F0081FF7D /* Observable.swift in Sources */,
@@ -299,8 +317,10 @@
 				9804B4432949E8980081FF7D /* MainScreenViewModel.swift in Sources */,
 				9804B4412949E8980081FF7D /* UIEdgeInsets+Extension.swift in Sources */,
 				9804B44E2949F1920081FF7D /* DetailScreenViewModelProtocol.swift in Sources */,
+				987DA595294C8AE20065426C /* SpinnerViewController.swift in Sources */,
 				98660CE3294A239300EC85E4 /* MainScreenTableViewCell.swift in Sources */,
 				9804B43E2949E8980081FF7D /* ApiService.swift in Sources */,
+				987DA598294CA3580065426C /* SectionHeaderView.swift in Sources */,
 				9804B44B2949ECF00081FF7D /* ApiServiceProtocol.swift in Sources */,
 				98660CE8294B39C900EC85E4 /* MainScreenCollectionViewCell.swift in Sources */,
 				9804B4512949F81F0081FF7D /* MainScreenHeaderView.swift in Sources */,

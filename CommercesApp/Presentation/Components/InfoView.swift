@@ -56,7 +56,7 @@ final class InfoView: UIView {
             case .dark:
                 titleLabel.textColor = .white
                 subtitleLabel.textColor = .white
-                backgroundColor = .blue
+                backgroundColor = .infoViewDarkColor
         }
     }
 

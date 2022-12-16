@@ -11,11 +11,12 @@ final class MainScreenHeaderView: UIView {
     
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
+            SpacerView(axis: .vertical, space: 16),
             horizontalStackViewContainer,
+            SpacerView(axis: .vertical, space: 16),
             collectionView
         ])
         stackView.axis = .vertical
-        stackView.spacing = 16
         return stackView
     }()
     
@@ -68,7 +69,7 @@ final class MainScreenHeaderView: UIView {
     init() {
         super.init(frame: .zero)
         fill(with: mainStackView, edges: .init(top: 16, left: 0, bottom: 16, right: 0))
-        backgroundColor = .clear
+        backgroundColor = .mainScreenBackgroundColor
     }
     
     required init?(coder: NSCoder) {
@@ -83,7 +84,6 @@ final class MainScreenHeaderView: UIView {
         rightInfoView.configure(withTitle: rightInfoViewTitle,
                                 subtitle: "A menos de 1 km")
         updateCollectionView()
-
     }
     
 }

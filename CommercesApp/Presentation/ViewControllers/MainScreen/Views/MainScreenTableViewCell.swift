@@ -19,6 +19,8 @@ final class MainScreenTableViewCell: UITableViewCell {
         contentView.backgroundColor = .clear
         backgroundColor = .clear
         contentView.fill(with: view)
+        selectionStyle = .none
+        addShadow()
     }
 }
 
@@ -47,7 +49,7 @@ final class MainScreenTableViewCellView: UIView {
     
     private lazy var headerStackViewContainer: UIView = {
         let view = UIView()
-        view.fill(with: headerStackView, edges: .init(top: 8, left: 16, bottom: 8, right: 16))
+        view.fill(with: headerStackView, edges: .init(allEdges: 8))
         return view
     }()
     
@@ -61,13 +63,13 @@ final class MainScreenTableViewCellView: UIView {
             SpacerView(axis: .horizontal, space: 4),
             rightArrowImageView
         ])
+        stackView.heightAnchor.constraint(equalToConstant: 24).isActive = true
         return stackView
     }()
     
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.heightAnchor.constraint(equalToConstant: 28).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 28).isActive = true
         return imageView
     }()
@@ -91,7 +93,6 @@ final class MainScreenTableViewCellView: UIView {
         let image = UIImage(named: "Arrow_right")?.withRenderingMode(.alwaysTemplate)
         imageView.image = image
         imageView.tintColor = .white
-        imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
         imageView.contentMode = .scaleAspectFit
         return imageView
