@@ -78,13 +78,14 @@ final class MainScreenTableViewCellView: UIView {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .white
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
     }()
     
     private let distanceLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = .boldSystemFont(ofSize: 16)        
         return label
     }()
     

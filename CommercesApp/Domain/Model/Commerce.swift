@@ -6,6 +6,7 @@ struct Commerce: Codable {
     let location: [Double]
     let openingHours: String
     let address: Address
+    var distanceToUser: Double?
     
     var commerceCategory: CommerceCategory {
         switch self.category {
@@ -28,6 +29,17 @@ struct Commerce: Codable {
                 return .gasStation
         }
         
+    }
+    
+    func updateDistanceToUser(_ distanceToUser: Double) -> Commerce {
+        .init(photo: photo,
+              name: name,
+              category: category,
+              cashback: cashback,
+              location: location,
+              openingHours: openingHours,
+              address: address,
+              distanceToUser: distanceToUser)
     }
 }
 

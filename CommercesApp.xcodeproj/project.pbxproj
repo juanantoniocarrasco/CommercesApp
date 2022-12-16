@@ -33,6 +33,7 @@
 		987DA593294C6C650065426C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA592294C6C650065426C /* UIColor+Extension.swift */; };
 		987DA595294C8AE20065426C /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA594294C8AE20065426C /* SpinnerViewController.swift */; };
 		987DA598294CA3580065426C /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA597294CA3580065426C /* SectionHeaderView.swift */; };
+		987DA59C294CD2800065426C /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA59B294CD2800065426C /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		987DA592294C6C650065426C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		987DA594294C8AE20065426C /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		987DA597294CA3580065426C /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		987DA59B294CD2800065426C /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +82,8 @@
 		9804B42A2949E8980081FF7D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				9804B42B2949E8980081FF7D /* ApiService.swift */,
-				9804B44A2949ECF00081FF7D /* ApiServiceProtocol.swift */,
+				987DA59A294CD26E0065426C /* LocationService */,
+				987DA599294CD25B0065426C /* ApiService */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -231,6 +233,23 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		987DA599294CD25B0065426C /* ApiService */ = {
+			isa = PBXGroup;
+			children = (
+				9804B42B2949E8980081FF7D /* ApiService.swift */,
+				9804B44A2949ECF00081FF7D /* ApiServiceProtocol.swift */,
+			);
+			path = ApiService;
+			sourceTree = "<group>";
+		};
+		987DA59A294CD26E0065426C /* LocationService */ = {
+			isa = PBXGroup;
+			children = (
+				987DA59B294CD2800065426C /* LocationService.swift */,
+			);
+			path = LocationService;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -318,6 +337,7 @@
 				9804B4412949E8980081FF7D /* UIEdgeInsets+Extension.swift in Sources */,
 				9804B44E2949F1920081FF7D /* DetailScreenViewModelProtocol.swift in Sources */,
 				987DA595294C8AE20065426C /* SpinnerViewController.swift in Sources */,
+				987DA59C294CD2800065426C /* LocationService.swift in Sources */,
 				98660CE3294A239300EC85E4 /* MainScreenTableViewCell.swift in Sources */,
 				9804B43E2949E8980081FF7D /* ApiService.swift in Sources */,
 				987DA598294CA3580065426C /* SectionHeaderView.swift in Sources */,

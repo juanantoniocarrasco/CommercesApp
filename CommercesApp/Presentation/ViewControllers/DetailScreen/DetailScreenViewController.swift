@@ -73,7 +73,7 @@ final class DetailScreenViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel: DetailScreenViewModelProtocol
-    private let locationManager = CLLocationManager()
+    private let locationService = LocationService.shared
 
     // MARK: - Initialization
     
@@ -85,92 +85,93 @@ final class DetailScreenViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        view.fillToSafeAreaInTop(with: tableView)
-        title = "Nombre del Comercio"
-
+        
+    override func loadView() {
+        super.loadView()
+        setupUI()
+        setupLocationService()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupLocationManager()
+        setupMapView()
     }
-    
+
 }
 
 // MARK: - Private Functions
 
 private extension DetailScreenViewController {
     
-    func setupLocationManager() {
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        
-        DispatchQueue.global().async {
-            guard CLLocationManager.locationServicesEnabled() else { return }
-            self.locationManager.delegate = self
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            self.locationManager.startUpdatingLocation()
-        }
+    func setupUI() {
+        view.backgroundColor = .white
+        view.fillToSafeAreaInTop(with: tableView)
+        title = "Nombre del Comercio"
     }
     
-    func render(_ location: CLLocation) {
-        let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                                                longitude: location.coordinate.longitude)
+    func setupLocationService() {
+        locationService.delegate = self
+        locationService.startUpdatingLocation()
+    }
+    
+    func setupMapView() {
+        let commerceLocation = viewModel.getCommerceLocation()
+        let commerceCoordinate = CLLocationCoordinate2D(latitude: commerceLocation.last!,
+                                                        longitude: commerceLocation.first!)
+        render(commerceCoordinate)
+    }
+    
+    func render(_ coordinate: CLLocationCoordinate2D) {
+        setMapRegion(with: coordinate)
+        addPinToMap(in: coordinate)
+    }
+    
+    func setMapRegion(with coordinate: CLLocationCoordinate2D) {
         let span = MKCoordinateSpan(latitudeDelta: 0.1,
                                     longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate,
                                         span: span)
         mapView.setRegion(region,
                           animated: true)
+    }
+    
+    func addPinToMap(in coordinate: CLLocationCoordinate2D) {
         let pin = MKPointAnnotation()
         pin.coordinate = coordinate
         mapView.addAnnotation(pin)
-        
     }
     
     func openInMapApp() {
-        let commerceCoordinates = viewModel.getCommerceLocation()
+        let commerceLocation = viewModel.getCommerceLocation()
         
-        let destinationCoordinates = CLLocationCoordinate2D(latitude: commerceCoordinates.last!,
-                                                            longitude: commerceCoordinates.first!)
-        guard let sourceCoordinates = locationManager.location?.coordinate else { return }
+        guard
+            let sourceCoordinate = locationService.lastLocation?.coordinate,
+            let destinationCoordinate = locationService.map(commerceLocation)?.coordinate
+        else {
+            return
+        }
         
-        let source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: sourceCoordinates.latitude,
-                                                                                         longitude: sourceCoordinates.longitude)))
-        let destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: destinationCoordinates.latitude,
-                                                                                              longitude: destinationCoordinates.longitude)))
+        let source = MKMapItem(placemark: MKPlacemark(coordinate: sourceCoordinate))
+        let destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
         source.name = "Mi ubicación"
         destination.name = "comercio"
         
-        MKMapItem.openMaps(
-            with: [source, destination],
-            launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-        )
+        MKMapItem.openMaps(with: [source, destination],
+                           launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
     }
 }
 
-// MARK: - CLLocationManagerDelegate
-
-extension DetailScreenViewController: CLLocationManagerDelegate {
+extension DetailScreenViewController: LocationServiceDelegate {
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        if let _ = locations.first {
-            manager.stopUpdatingLocation()
-        }
-        let commerceCoordinates = viewModel.getCommerceLocation()
-        let commerceLocation = CLLocation(latitude: commerceCoordinates.last!,
-                                          longitude: commerceCoordinates.first!)
-        render(commerceLocation)
-
+    func tracingLocation(_ currentLocation: CLLocation) {
+        print("location = \(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
+        
     }
+    
+    func tracingLocationDidFailWithError(_ error: Error) {
+        
+    }
+    
 }
 
 // MARK: - UITableViewDataSource

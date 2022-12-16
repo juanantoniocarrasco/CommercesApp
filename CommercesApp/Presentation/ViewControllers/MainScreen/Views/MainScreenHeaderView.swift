@@ -99,7 +99,7 @@ private extension MainScreenHeaderView {
     }
     
     func getNumberOfCommercesLessThanAKm(for commerceList: [Commerce]) -> String {
-        "10"
+        String(commerceList.filter { $0.distanceToUser ?? 1 < 1 }.count)
     }
 }
 

@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 
 final class MainScreenViewModel: MainScreenViewModelProtocol {
     
@@ -12,12 +13,15 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     private let service: ApiServiceProtocol
     private var commerceList: [Commerce] = []
     private var filteredCommerceList: [Commerce] = []
-    
+    private let locationService = LocationService.shared
+
     init(service: ApiServiceProtocol) {
         self.service = service
     }
     
     func viewDidLoad() {
+        locationService.startUpdatingLocation()
+        locationService.delegate = self
         getCommerces()
     }
     
@@ -56,12 +60,28 @@ private extension MainScreenViewModel {
         service.getCommerces { [weak self] result in
             switch result {
                 case .success(let commerceList):
-                    self?.commerceList = commerceList
-                    self?.state.wrappedValue = .commerceListLoaded(commerceList: commerceList)
+                    guard let commerceListSorted = self?.getCommerceListSorted(commerceList: commerceList) else { return }
+                    self?.commerceList = commerceListSorted
+                    self?.state.wrappedValue = .commerceListLoaded(commerceList: commerceListSorted)
+                    
                 case .failure(let error):
                     print("Error processing json data: \(error)")
             }
         }
+    }
+    
+    
+    // TODO: Refactor
+    func getCommerceListSorted(commerceList: [Commerce]) -> [Commerce] {
+        guard let userLocation = locationService.lastLocation else { return commerceList }
+        var updatedCommerceList: [Commerce] = []
+        commerceList.forEach { commerce in
+            guard let commerceLocation = self.locationService.map(commerce.location) else { return }
+            let distance = userLocation.distance(from: commerceLocation) / 1000
+            updatedCommerceList.append(commerce.updateDistanceToUser(distance))
+        }
+        
+        return updatedCommerceList.sorted { $0.distanceToUser! < $1.distanceToUser!}
     }
     
     func getGasStationCommerces() -> [Commerce] {
@@ -108,8 +128,10 @@ extension MainScreenViewModel {
         let commerceList = filteredCommerceList.isEmpty ? commerceList : filteredCommerceList
         
         let commerce = commerceList[indexPath.row]
+        
+        // TODO: distance formatter
         cell.configure(with: .init(category: commerce.commerceCategory,
-                                   distance: "250m.",
+                                   distance: String(Double(round(10 * commerce.distanceToUser!) / 10)) + " km",
                                    image: UIImage(named: "only image"),
                                    title: commerce.name,
                                    subtitle: commerce.openingHours))
@@ -130,3 +152,16 @@ extension MainScreenViewModel {
     }
 }
 
+// MARK: - LocationServiceDelegate
+
+extension MainScreenViewModel: LocationServiceDelegate {
+    func tracingLocation(_ currentLocation: CLLocation) {
+        getCommerces()
+    }
+    
+    func tracingLocationDidFailWithError(_ error: Error) {
+        // TODO: Handle error
+    }
+    
+    
+}

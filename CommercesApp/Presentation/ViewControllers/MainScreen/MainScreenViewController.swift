@@ -51,20 +51,7 @@ final class MainScreenViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        view.fillToSafeAreaInTop(with: stackView)
-        view.backgroundColor = .white
-        title = "Listado de comercios"
-        navigationItem.backBarButtonItem = .init(title: "",
-                                                 style: .plain,
-                                                 target: nil,
-                                                 action: nil)
-        navigationController?.navigationBar.backgroundColor = .white
-    }
-    
-    // MARK: - Life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        setupUI()
         showSpinner()
         viewModel.viewDidLoad()
         bind()
@@ -75,6 +62,17 @@ final class MainScreenViewController: UIViewController {
 // MARK: - Private Functions
 
 private extension MainScreenViewController {
+    
+    func setupUI() {
+        view.fillToSafeAreaInTop(with: stackView)
+        view.backgroundColor = .white
+        title = "Listado de comercios"
+        navigationItem.backBarButtonItem = .init(title: "",
+                                                 style: .plain,
+                                                 target: nil,
+                                                 action: nil)
+        navigationController?.navigationBar.backgroundColor = .white
+    }
     
     func bind() {
         viewModel.state.observe(on: self) { [weak self] state in
