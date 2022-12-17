@@ -1,8 +1,10 @@
 final class ViewControllerFactory {
     
     static func createMainScreenViewController() -> MainScreenViewController {
-        let service = ApiService()
-        let viewModel = MainScreenViewModel(service: service)
+        let apiService = ApiService()
+        let locationService = LocationService.shared
+        let viewModel = MainScreenViewModel(apiService: apiService,
+                                            locationService: locationService)
         let viewController = MainScreenViewController(viewModel: viewModel)
         
         return viewController

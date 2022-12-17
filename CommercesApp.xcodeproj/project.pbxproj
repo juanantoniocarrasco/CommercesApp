@@ -34,6 +34,7 @@
 		987DA595294C8AE20065426C /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA594294C8AE20065426C /* SpinnerViewController.swift */; };
 		987DA598294CA3580065426C /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA597294CA3580065426C /* SectionHeaderView.swift */; };
 		987DA59C294CD2800065426C /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA59B294CD2800065426C /* LocationService.swift */; };
+		987DA59E294DDD150065426C /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA59D294DDD150065426C /* UIImageView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		987DA594294C8AE20065426C /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		987DA597294CA3580065426C /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		987DA59B294CD2800065426C /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		987DA59D294DDD150065426C /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				9804B4312949E8980081FF7D /* UIView+Extension.swift */,
 				9804B4322949E8980081FF7D /* UIEdgeInsets+Extension.swift */,
 				987DA592294C6C650065426C /* UIColor+Extension.swift */,
+				987DA59D294DDD150065426C /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			files = (
 				9804B4452949E8980081FF7D /* DetailScreenViewModel.swift in Sources */,
 				9804B4402949E8980081FF7D /* UIView+Extension.swift in Sources */,
+				987DA59E294DDD150065426C /* UIImageView+Extension.swift in Sources */,
 				98660CE5294A275E00EC85E4 /* CommerceCategory.swift in Sources */,
 				987DA593294C6C650065426C /* UIColor+Extension.swift in Sources */,
 				98581B492949D979005E24FE /* AppDelegate.swift in Sources */,

@@ -52,9 +52,9 @@ final class MainScreenViewController: UIViewController {
     override func loadView() {
         super.loadView()
         setupUI()
+        bind()
         showSpinner()
         viewModel.viewDidLoad()
-        bind()
     }
 
 }
@@ -108,6 +108,13 @@ private extension MainScreenViewController {
         spinnerViewController.removeFromParent()
     }
     
+    func scrollToTop() {
+        let topRow = IndexPath(row: 0, section: 0)
+        tableView.scrollToRow(at: topRow,
+                              at: .top,
+                              animated: false)
+    }
+    
     func navigateToDetailScreen(with commerce: Commerce) {
         let viewController = ViewControllerFactory.createDetailScreenViewController(with: commerce)
         navigationController?.pushViewController(viewController, animated: true)
@@ -148,5 +155,6 @@ extension MainScreenViewController: MainScreenHeaderViewDelegate {
         self.categorySelected = isCurrentCategory
         ? nil
         : categorySelected
+        scrollToTop()
     }
 }

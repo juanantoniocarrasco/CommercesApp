@@ -4,7 +4,7 @@ import UIKit
 
 final class MainScreenTableViewCell: UITableViewCell {
     
-    var view: MainScreenTableViewCellView = MainScreenTableViewCellView()
+    var view = MainScreenTableViewCellView()
     
     static var identifier: String {
         .init(describing: self)
@@ -28,12 +28,15 @@ final class MainScreenTableViewCell: UITableViewCell {
 
 final class MainScreenTableViewCellView: UIView {
     
+    // MARK: - Model
+    
     struct Model {
         let category: CommerceCategory
         let distance: String
-        let image: UIImage?
+        let photo: String
         let title: String
-        let subtitle: String
+        let bodyTitle: String
+        let bodySubtitle: String
     }
     
     // MARK: - Views
@@ -128,17 +131,26 @@ final class MainScreenTableViewCellView: UIView {
     private lazy var bodyLabelsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             SpacerView(axis: .vertical, space: 16),
-            subtitleLabel,
+            bodyTitleLabel,
+            SpacerView(axis: .vertical, space: 4),
+            bodySubtitleLabel,
             SpacerView(axis: .vertical, minimumSpace: 16)
         ])
         stackView.axis = .vertical
         return stackView
     }()
     
-    private let subtitleLabel: UILabel = {
+    private let bodyTitleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = .boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    private let bodySubtitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         return label
     }()
     
@@ -159,11 +171,12 @@ final class MainScreenTableViewCellView: UIView {
         headerStackViewContainer.backgroundColor = model.category.color
         iconImageView.image = model.category.iconWhite
         distanceLabel.text = model.distance
-        commerceImageView.image = model.image
         titleLabel.text = model.title
-        subtitleLabel.text = model.subtitle
+        bodyTitleLabel.text = model.bodyTitle
+        setupBodySubtitleLabel(with: model.bodySubtitle)
+        setupCommerceImage(icon: model.category.iconColour, photo: model.photo)
     }
-
+    
 }
 
 // MARK: - Private functions
@@ -175,9 +188,23 @@ private extension MainScreenTableViewCellView {
         mainStackView.layer.cornerRadius = 10
         mainStackView.clipsToBounds = true
         mainStackView.backgroundColor = .white
-        
         mainStackView.addShadow()
     }
     
+    func setupCommerceImage(icon: UIImage?, photo: String) {
+        commerceImageView.image = icon
+        commerceImageView.setImageFrom(photo)
+    }
+    
+    func setupBodySubtitleLabel(with text: String) {
+        guard
+            !text.isEmpty
+        else {
+            bodySubtitleLabel.text = "Horario no disponible para este comercio"
+            return
+        }
+        bodySubtitleLabel.text = "Horario: \(text)"
+        
+    }
 }
 

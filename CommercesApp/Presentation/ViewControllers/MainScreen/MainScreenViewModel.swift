@@ -10,13 +10,16 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     
     var state: Observable<State?> = .init(wrappedValue: nil)
 
-    private let service: ApiServiceProtocol
+    private let apiService: ApiServiceProtocol
+    private let locationService: LocationService
+
     private var commerceList: [Commerce] = []
     private var filteredCommerceList: [Commerce] = []
-    private let locationService = LocationService.shared
 
-    init(service: ApiServiceProtocol) {
-        self.service = service
+    init(apiService: ApiServiceProtocol,
+         locationService: LocationService) {
+        self.apiService = apiService
+        self.locationService = locationService
     }
     
     func viewDidLoad() {
@@ -25,7 +28,8 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
         getCommerces()
     }
     
-    func categorySelected(_ categorySelected: CommerceCategory, isCurrentCategory: Bool) {
+    func categorySelected(_ categorySelected: CommerceCategory,
+                          isCurrentCategory: Bool) {
         if isCurrentCategory  {
             filteredCommerceList = []
             state.wrappedValue = .commerceListLoaded(commerceList: commerceList)
@@ -57,7 +61,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
 private extension MainScreenViewModel {
     
     func getCommerces() {
-        service.getCommerces { [weak self] result in
+        apiService.getCommerces { [weak self] result in
             switch result {
                 case .success(let commerceList):
                     guard let commerceListSorted = self?.getCommerceListSorted(commerceList: commerceList) else { return }
@@ -65,16 +69,17 @@ private extension MainScreenViewModel {
                     self?.state.wrappedValue = .commerceListLoaded(commerceList: commerceListSorted)
                     
                 case .failure(let error):
+                    // TODO: Handle error
                     print("Error processing json data: \(error)")
             }
         }
     }
     
-    
     // TODO: Refactor
     func getCommerceListSorted(commerceList: [Commerce]) -> [Commerce] {
         guard let userLocation = locationService.lastLocation else { return commerceList }
         var updatedCommerceList: [Commerce] = []
+        
         commerceList.forEach { commerce in
             guard let commerceLocation = self.locationService.map(commerce.location) else { return }
             let distance = userLocation.distance(from: commerceLocation) / 1000
@@ -85,7 +90,7 @@ private extension MainScreenViewModel {
     }
     
     func getGasStationCommerces() -> [Commerce] {
-        commerceList.filter({ $0.commerceCategory == .gasStation})
+        commerceList.filter({ $0.commerceCategory == .gasStation })
     }
     
     func getBeautyCommerces() -> [Commerce] {
@@ -112,6 +117,10 @@ private extension MainScreenViewModel {
         commerceList.filter({ $0.commerceCategory == .shopping })
     }
     
+    func roundCommerceDistanceToUserToKm(_ distance: Double) -> Double {
+        .init(round(10 * distance) / 10)
+    }
+    
 }
 
 // MARK: - TableViewDatasource
@@ -126,15 +135,18 @@ extension MainScreenViewModel {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainScreenTableViewCell.identifier, for: indexPath) as? MainScreenTableViewCell else { return .init() }
         
         let commerceList = filteredCommerceList.isEmpty ? commerceList : filteredCommerceList
-        
         let commerce = commerceList[indexPath.row]
         
-        // TODO: distance formatter
+        #warning("Force unwrap")
+        let distanceRounded = roundCommerceDistanceToUserToKm(commerce.distanceToUser!)
+        let distance = String(distanceRounded) + " km"
+                
         cell.configure(with: .init(category: commerce.commerceCategory,
-                                   distance: String(Double(round(10 * commerce.distanceToUser!) / 10)) + " km",
-                                   image: UIImage(named: "only image"),
+                                   distance: distance,
+                                   photo: commerce.photo,
                                    title: commerce.name,
-                                   subtitle: commerce.openingHours))
+                                   bodyTitle: commerce.address.street,
+                                   bodySubtitle: commerce.openingHours))
         return cell
     }
 
