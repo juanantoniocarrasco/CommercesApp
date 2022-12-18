@@ -1,13 +1,13 @@
 import UIKit
 
-enum CommerceCategory: String, CaseIterable {
-    case gasStation = "GAS_STATION"
-    case restaurant = "FOOD"
-    case leisure = "LEISURE"
-    case shopping = "SHOPPING"
-    case electricStation = "ELECTRIC_STATION"
-    case directSales = "DIRECT_SALES"
-    case beauty = "BEAUTY"
+enum CommerceCategory: CaseIterable {
+    case gasStation
+    case restaurant
+    case leisure
+    case shopping
+    case electricStation
+    case directSales
+    case beauty
     
     var color: UIColor {
         switch self {

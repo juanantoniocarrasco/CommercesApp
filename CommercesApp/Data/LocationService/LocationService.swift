@@ -1,4 +1,3 @@
-import Foundation
 import CoreLocation
 
 protocol LocationServiceDelegate: AnyObject {
@@ -10,10 +9,10 @@ final class LocationService: NSObject {
     
     static let shared = LocationService()
     
+    var lastLocation: CLLocation?
     weak var delegate: LocationServiceDelegate?
 
     private let locationManager = CLLocationManager()
-    var lastLocation: CLLocation?
     
     override init() {
         super.init()
@@ -30,12 +29,10 @@ final class LocationService: NSObject {
     }
     
     func startUpdatingLocation() {
-        print("Starting Location Updates")
         locationManager.startUpdatingLocation()
     }
     
     func stopUpdatingLocation() {
-        print("Stop Location Updates")
         locationManager.stopUpdatingLocation()
     }
     

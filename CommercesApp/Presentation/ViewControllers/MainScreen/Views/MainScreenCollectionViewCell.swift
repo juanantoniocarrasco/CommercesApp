@@ -1,5 +1,7 @@
 import UIKit
 
+// MARK: - MainScreenCollectionViewCell
+
 final class MainScreenCollectionViewCell: UICollectionViewCell {
     
     static var identifier: String {
@@ -28,6 +30,8 @@ final class MainScreenCollectionViewCell: UICollectionViewCell {
     }
     
 }
+
+// MARK: - MainScreenCollectionViewCellView
 
 final class MainScreenCollectionViewCellView: UIView {
     

@@ -125,7 +125,6 @@ private extension DetailScreenViewController {
     }
     
     func setupLocationService() {
-        locationService.delegate = self
         locationService.startUpdatingLocation()
     }
     
@@ -150,19 +149,6 @@ private extension DetailScreenViewController {
             self?.tableView.reloadData()
         }
     }
-}
-
-extension DetailScreenViewController: LocationServiceDelegate {
-    
-    func tracingLocation(_ currentLocation: CLLocation) {
-        print("location = \(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
-        
-    }
-    
-    func tracingLocationDidFailWithError(_ error: Error) {
-        // TODO: Handle error
-    }
-    
 }
 
 // MARK: - UITableViewDataSource

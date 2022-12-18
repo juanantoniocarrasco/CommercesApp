@@ -90,7 +90,6 @@ final class DetailScreenLocationView: UIView {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = .boldSystemFont(ofSize: 16)
-        label.text = ""
         return label
     }()
     
@@ -98,7 +97,6 @@ final class DetailScreenLocationView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.numberOfLines = 2
-        label.text = ""
         return label
     }()
     
@@ -106,7 +104,6 @@ final class DetailScreenLocationView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.numberOfLines = 2
-        label.text = ""
         return label
     }()
     
@@ -121,12 +118,7 @@ final class DetailScreenLocationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Setup Views
-    
-    private func setupView() {
-        fill(with: mainStackView)
-        backgroundColor = .mainScreenBackgroundColor
-    }
+    // MARK: - Functions
     
     func configure(with model: Model) {
         titleLabel.text = model.title
@@ -136,14 +128,25 @@ final class DetailScreenLocationView: UIView {
         renderMapView(with: model.coordinate)
         
     }
+
+}
+
+// MARK: - Private Functions
+
+private extension DetailScreenLocationView {
     
-    private func renderMapView(with coordinate: CLLocationCoordinate2D?) {
+    func setupView() {
+        fill(with: mainStackView)
+        backgroundColor = .mainScreenBackgroundColor
+    }
+    
+    func renderMapView(with coordinate: CLLocationCoordinate2D?) {
         guard let coordinate else { return }
         setMapRegion(with: coordinate)
         addPinToMap(in: coordinate)
     }
     
-    private func setMapRegion(with coordinate: CLLocationCoordinate2D) {
+    func setMapRegion(with coordinate: CLLocationCoordinate2D) {
         let span = MKCoordinateSpan(latitudeDelta: 0.1,
                                     longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate,
@@ -152,7 +155,7 @@ final class DetailScreenLocationView: UIView {
                           animated: true)
     }
     
-    private func addPinToMap(in coordinate: CLLocationCoordinate2D) {
+    func addPinToMap(in coordinate: CLLocationCoordinate2D) {
         let pin = MKPointAnnotation()
         pin.coordinate = coordinate
         mapView.addAnnotation(pin)

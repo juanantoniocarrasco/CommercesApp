@@ -13,19 +13,13 @@ final class ApiService: ApiServiceProtocol {
             
             if let error {
                 completion(.failure(error))
-                print("DataTask error: \(error.localizedDescription)")
                 return
             }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Empty Response")
-                return
-            }
-            
-            print("Response status code: \(response.statusCode)")
-            
-            guard let data else {
-                print("Empty Data")
+        
+            guard
+                let response = response as? HTTPURLResponse,
+                let data
+            else {
                 return
             }
                         
@@ -36,6 +30,7 @@ final class ApiService: ApiServiceProtocol {
                 DispatchQueue.main.async {
                     completion(.success(jsonData))
                 }
+                
             } catch let error {
                 completion(.failure(error))
             }

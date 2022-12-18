@@ -1,7 +1,7 @@
 import UIKit
 
 protocol MainScreenHeaderViewDelegate: AnyObject {
-    var categorySelected: CommerceCategory? { get }
+    var currentCategory: CommerceCategory? { get }
     func categorySelected(_ categorySelected: CommerceCategory)
 }
 
@@ -64,7 +64,11 @@ final class MainScreenHeaderView: UIView {
         return collectionView
     }()
     
+    // MARK: - Properties
+    
     weak var delegate: MainScreenHeaderViewDelegate?
+    
+    // MARK: - Init
     
     init() {
         super.init(frame: .zero)
@@ -75,6 +79,8 @@ final class MainScreenHeaderView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Functions
     
     func configure(with commerceList: [Commerce]) {
         let leftInfoViewTitle = String(commerceList.count)
@@ -103,6 +109,8 @@ private extension MainScreenHeaderView {
     }
 }
 
+// MARK: - UICollectionViewDataSource
+
 extension MainScreenHeaderView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -113,12 +121,14 @@ extension MainScreenHeaderView: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainScreenCollectionViewCell.identifier, for: indexPath as IndexPath) as? MainScreenCollectionViewCell else { return .init() }
     
         let category = CommerceCategory.allCases[indexPath.row]
-        let isSelected = category == delegate?.categorySelected
+        let isSelected = category == delegate?.currentCategory
         cell.configure(with: category, isSelected: isSelected)
         return cell
     }
     
 }
+
+// MARK: - UICollectionViewDelegate
 
 extension MainScreenHeaderView: UICollectionViewDelegate {
     

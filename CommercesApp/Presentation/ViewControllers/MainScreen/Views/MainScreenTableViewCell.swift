@@ -15,6 +15,11 @@ final class MainScreenTableViewCell: UITableViewCell {
         setupView()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        view.prepareForReuse()
+    }
+    
     private func setupView() {
         contentView.backgroundColor = .clear
         backgroundColor = .clear
@@ -205,6 +210,10 @@ private extension MainScreenTableViewCellView {
         }
         bodySubtitleLabel.text = "Horario: \(text)"
         
+    }
+    
+    func prepareForReuse() {
+        commerceImageView.image = nil
     }
 }
 

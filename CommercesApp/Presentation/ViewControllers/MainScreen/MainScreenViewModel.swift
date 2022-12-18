@@ -23,9 +23,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     }
     
     func viewDidLoad() {
-        locationService.startUpdatingLocation()
-        locationService.delegate = self
-        getCommerces()
+        setupLocationService()
     }
     
     func categorySelected(_ categorySelected: CommerceCategory,
@@ -60,6 +58,11 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
 
 private extension MainScreenViewModel {
     
+    func setupLocationService() {
+        locationService.startUpdatingLocation()
+        locationService.delegate = self
+    }
+    
     func getCommerces() {
         apiService.getCommerces { [weak self] result in
             switch result {
@@ -69,8 +72,8 @@ private extension MainScreenViewModel {
                     self?.state.wrappedValue = .commerceListLoaded(commerceList: commerceListSorted)
                     
                 case .failure(let error):
+                    break
                     // TODO: Handle error
-                    print("Error processing json data: \(error)")
             }
         }
     }
@@ -178,6 +181,5 @@ extension MainScreenViewModel: LocationServiceDelegate {
     func tracingLocationDidFailWithError(_ error: Error) {
         // TODO: Handle error
     }
-    
     
 }

@@ -33,7 +33,7 @@ final class MainScreenViewController: UIViewController {
     
     // MARK: - Properties
     
-    var categorySelected: CommerceCategory?
+    var currentCategory: CommerceCategory?
 
     private let viewModel: MainScreenViewModelProtocol
     private let spinnerViewController = SpinnerViewController()
@@ -71,7 +71,6 @@ private extension MainScreenViewController {
                                                  style: .plain,
                                                  target: nil,
                                                  action: nil)
-        navigationController?.navigationBar.backgroundColor = .white
     }
     
     func bind() {
@@ -149,10 +148,10 @@ extension MainScreenViewController: UITableViewDelegate {
 extension MainScreenViewController: MainScreenHeaderViewDelegate {
     
     func categorySelected(_ categorySelected: CommerceCategory) {
-        let isCurrentCategory = categorySelected == self.categorySelected
+        let isCurrentCategory = categorySelected == self.currentCategory
         viewModel.categorySelected(categorySelected,
                                    isCurrentCategory: isCurrentCategory)
-        self.categorySelected = isCurrentCategory
+        self.currentCategory = isCurrentCategory
         ? nil
         : categorySelected
         scrollToTop()

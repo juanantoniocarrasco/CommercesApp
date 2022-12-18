@@ -116,7 +116,7 @@
 		9804B42F2949E8980081FF7D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				98660CE4294A275E00EC85E4 /* CommerceCategory.swift */,
+				98459D0E294FCBD20018047F /* CommerceCategory */,
 				98660CE6294B38D300EC85E4 /* Observable */,
 				9804B4302949E8980081FF7D /* Extensions */,
 				9804B4332949E8980081FF7D /* Components */,
@@ -193,6 +193,14 @@
 				98660CE7294B39C900EC85E4 /* MainScreenCollectionViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		98459D0E294FCBD20018047F /* CommerceCategory */ = {
+			isa = PBXGroup;
+			children = (
+				98660CE4294A275E00EC85E4 /* CommerceCategory.swift */,
+			);
+			path = CommerceCategory;
 			sourceTree = "<group>";
 		};
 		98581B3C2949D979005E24FE = {
