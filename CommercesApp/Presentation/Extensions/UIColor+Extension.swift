@@ -1,6 +1,7 @@
 import UIKit
 
 extension UIColor {
+    
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
         assert(green >= 0 && green <= 255, "Invalid green component")
@@ -20,6 +21,7 @@ extension UIColor {
 
 
 extension UIColor {
+    
     static var infoViewDarkColor: UIColor {
         .init(rgb: 0x081c44)
     }
@@ -28,12 +30,32 @@ extension UIColor {
         .lightGray.withAlphaComponent(0.08)
     }
 
-    static var restaurantColor: UIColor {
-        .init(rgb: 0xffc802)
+    static var gasStationColor: UIColor {
+        .orange
     }
     
     static var leisureColor: UIColor {
         .init(rgb: 0x983cdc)
+    }
+    
+    static var restaurantColor: UIColor {
+        .init(rgb: 0xffc802)
+    }
+    
+    static var shoppingColor: UIColor {
+        .systemPink
+    }
+    
+    static var electricStationColor: UIColor {
+        .systemBlue
+    }
+    
+    static var directSalesColor: UIColor {
+        .systemGreen
+    }
+    
+    static var beautyColor: UIColor {
+        .systemPurple
     }
     
 }

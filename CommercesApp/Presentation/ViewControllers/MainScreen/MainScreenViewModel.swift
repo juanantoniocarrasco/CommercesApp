@@ -75,13 +75,15 @@ private extension MainScreenViewModel {
         }
     }
     
-    // TODO: Refactor
     func getCommerceListSorted(commerceList: [Commerce]) -> [Commerce] {
         guard let userLocation = locationService.lastLocation else { return commerceList }
+        
         var updatedCommerceList: [Commerce] = []
         
         commerceList.forEach { commerce in
-            guard let commerceLocation = self.locationService.map(commerce.location) else { return }
+            guard let coordinate = commerce.locationCoordinate  else { return }
+            let commerceLocation = CLLocation(latitude: coordinate.latitude,
+                                              longitude: coordinate.longitude)
             let distance = userLocation.distance(from: commerceLocation) / 1000
             updatedCommerceList.append(commerce.updateDistanceToUser(distance))
         }
@@ -116,11 +118,15 @@ private extension MainScreenViewModel {
     func getShoppingCommerces() -> [Commerce] {
         commerceList.filter({ $0.commerceCategory == .shopping })
     }
-    
-    func roundCommerceDistanceToUserToKm(_ distance: Double) -> Double {
-        .init(round(10 * distance) / 10)
+
+    func getRoundedDistanceInString(distance: Double?) -> String? {
+        guard let distance else {return nil }
+        
+        let roundedDistance = Double(round(10 * distance) / 10)
+        let distanceString = "\(roundedDistance) km"
+        
+        return distanceString
     }
-    
 }
 
 // MARK: - TableViewDatasource
@@ -137,9 +143,7 @@ extension MainScreenViewModel {
         let commerceList = filteredCommerceList.isEmpty ? commerceList : filteredCommerceList
         let commerce = commerceList[indexPath.row]
         
-        #warning("Force unwrap")
-        let distanceRounded = roundCommerceDistanceToUserToKm(commerce.distanceToUser!)
-        let distance = String(distanceRounded) + " km"
+        let distance = getRoundedDistanceInString(distance: commerce.distanceToUser)
                 
         cell.configure(with: .init(category: commerce.commerceCategory,
                                    distance: distance,

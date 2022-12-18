@@ -1,5 +1,3 @@
-import UIKit
-import CoreLocation
 import MapKit
 
 final class DetailScreenViewController: UIViewController {
@@ -7,12 +5,11 @@ final class DetailScreenViewController: UIViewController {
     enum Section: CaseIterable {
         case image
         case location
-        case info
         case about
     }
 
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -29,8 +26,6 @@ final class DetailScreenViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(named: "only image")
-        imageView.image = image
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
@@ -38,36 +33,14 @@ final class DetailScreenViewController: UIViewController {
         return imageView
     }()
     
-    private let mapView: MKMapView = {
-        let mapView = MKMapView()
-        mapView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        return mapView
-    }()
-    
-    private lazy var infoViewContainer: UIView = {
-        let view = UIView()
-        view.fill(with: infoViewStackView, edges: .init(allEdges: 16))
-        view.backgroundColor = .mainScreenBackgroundColor
+    private let locationView: DetailScreenLocationView = {
+        let view = DetailScreenLocationView()
         return view
     }()
     
-    private lazy var infoViewStackView: UIStackView = {
-        let title = UILabel()
-        let subtitle = UILabel()
-        let footer = UILabel()
-        title.text = "title"
-        subtitle.text = "subtitle"
-        footer.text = "footer"
-        let stackView = UIStackView(arrangedSubviews: [
-            title,
-            subtitle,
-            footer
-        ])
-        stackView.axis = .vertical
-        stackView.layer.cornerRadius = 10
-        stackView.clipsToBounds = true
-        stackView.backgroundColor = .white
-        return stackView
+    private let aboutView: DetailScreenAboutView = {
+        let view = DetailScreenAboutView()
+        return view
     }()
     
     // MARK: - Properties
@@ -88,13 +61,10 @@ final class DetailScreenViewController: UIViewController {
         
     override func loadView() {
         super.loadView()
-        setupUI()
         setupLocationService()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setupMapView()
+        setupUI()
+        bind()
+        viewModel.viewDidLoad()
     }
 
 }
@@ -106,7 +76,52 @@ private extension DetailScreenViewController {
     func setupUI() {
         view.backgroundColor = .white
         view.fillToSafeAreaInTop(with: tableView)
-        title = "Nombre del Comercio"
+    }
+    
+    func bind() {
+        viewModel.state.observe(on: self) { [weak self] state in
+            guard let state else { return }
+            
+            switch state {
+                case .loaded(let commerce):
+                    self?.title = commerce.name
+                    self?.imageView.setImageFrom(commerce.photo)
+                    if let model = self?.getModelForLocationView(for: commerce) {
+                        self?.locationView.configure(with: model)
+                    }
+                    if let aboutText = self?.getModelForAboutView(for: commerce) {
+                        self?.aboutView.configure(with: aboutText)
+                    }
+                    self?.updateTableView()
+                case .locationButtonTapped(let commerce):
+                    self?.openInMapApp(commerce)
+            }
+        }
+    }
+    
+    func getModelForAboutView(for commerce: Commerce) -> String {
+        let firstText = commerce.openingHours.isEmpty
+        ? "Horario no disponible para este comercio"
+        : commerce.openingHours
+        
+        guard
+            let cashback = commerce.cashback,
+            cashback != 0
+        else {
+            return firstText
+        }
+        
+        let secondText = "Hasta \(Int(cashback))% de saldo por cada compra"
+       
+        return firstText + "\n\n" + secondText
+    }
+    
+    func getModelForLocationView(for commerce: Commerce) -> DetailScreenLocationView.Model {
+        .init(title: commerce.name + " " + commerce.address.street,
+              subtitle: commerce.address.city + ", " + (commerce.address.state ?? "").capitalized + ", " + (commerce.address.zip ?? ""),
+              footer: commerce.address.country.capitalized,
+              photo: commerce.photo,
+              coordinate: commerce.locationCoordinate)
     }
     
     func setupLocationService() {
@@ -114,50 +129,26 @@ private extension DetailScreenViewController {
         locationService.startUpdatingLocation()
     }
     
-    func setupMapView() {
-        let commerceLocation = viewModel.getCommerceLocation()
-        let commerceCoordinate = CLLocationCoordinate2D(latitude: commerceLocation.last!,
-                                                        longitude: commerceLocation.first!)
-        render(commerceCoordinate)
-    }
-    
-    func render(_ coordinate: CLLocationCoordinate2D) {
-        setMapRegion(with: coordinate)
-        addPinToMap(in: coordinate)
-    }
-    
-    func setMapRegion(with coordinate: CLLocationCoordinate2D) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.1,
-                                    longitudeDelta: 0.1)
-        let region = MKCoordinateRegion(center: coordinate,
-                                        span: span)
-        mapView.setRegion(region,
-                          animated: true)
-    }
-    
-    func addPinToMap(in coordinate: CLLocationCoordinate2D) {
-        let pin = MKPointAnnotation()
-        pin.coordinate = coordinate
-        mapView.addAnnotation(pin)
-    }
-    
-    func openInMapApp() {
-        let commerceLocation = viewModel.getCommerceLocation()
-        
+    func openInMapApp(_ commerce: Commerce) {
         guard
             let sourceCoordinate = locationService.lastLocation?.coordinate,
-            let destinationCoordinate = locationService.map(commerceLocation)?.coordinate
+            let destinationCoordinate = commerce.locationCoordinate
         else {
             return
         }
-        
         let source = MKMapItem(placemark: MKPlacemark(coordinate: sourceCoordinate))
         let destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
         source.name = "Mi ubicación"
-        destination.name = "comercio"
+        destination.name = commerce.name
         
         MKMapItem.openMaps(with: [source, destination],
                            launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+    }
+    
+    func updateTableView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 }
 
@@ -169,7 +160,7 @@ extension DetailScreenViewController: LocationServiceDelegate {
     }
     
     func tracingLocationDidFailWithError(_ error: Error) {
-        
+        // TODO: Handle error
     }
     
 }
@@ -193,21 +184,23 @@ extension DetailScreenViewController: UITableViewDataSource {
             case .image:
                 let cell = UITableViewCell()
                 cell.fill(with: imageViewContainer)
+                cell.selectionStyle = .none
                 return cell
+
             case .location:
                 let cell = UITableViewCell()
-                cell.fill(with: mapView)
+                cell.fill(with: locationView)
+                cell.selectionStyle = .none
                 return cell
-            case .info:
-                let cell = UITableViewCell()
-                cell.fill(with: infoViewContainer)
-                return cell
+                
             case .about:
-                return .init()
+                let cell = UITableViewCell()
+                cell.fill(with: aboutView)
+                cell.selectionStyle = .none
+                return cell
         }
     }
 
-    
 }
 
 // MARK: - UITableViewDelegate
@@ -224,16 +217,13 @@ extension DetailScreenViewController: UITableViewDelegate {
                 return view
                 
             case .location:
-                let header = SectionHeaderView(labelText: "Localización", buttonTitle: "Llévame aqui")
+                let header = DetailScreenSectionHeaderView(labelText: "Localización",
+                                                           buttonTitle: "Llévame aqui")
                 header.delegate = self
                 return header
                 
-            case .info:
-                let view = UIView()
-                view.heightAnchor.constraint(equalToConstant: 1).isActive = true
-                return view
             case .about:
-                return SectionHeaderView(labelText: "Sobre el comercio", buttonTitle: nil)
+                return DetailScreenSectionHeaderView(labelText: "Sobre el comercio")
                 
         }
     }
@@ -241,9 +231,9 @@ extension DetailScreenViewController: UITableViewDelegate {
 
 // MARK: - SectionHeaderViewDelegate
 
-extension DetailScreenViewController: SectionHeaderViewDelegate {
+extension DetailScreenViewController: DetailScreenSectionHeaderViewDelegate {
     
     func buttonTapped() {
-        openInMapApp()
+        viewModel.locationButtonTapped()
     }
 }

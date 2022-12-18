@@ -1,10 +1,10 @@
 import UIKit
 
-protocol SectionHeaderViewDelegate: AnyObject {
+protocol DetailScreenSectionHeaderViewDelegate: AnyObject {
     func buttonTapped()
 }
 
-final class SectionHeaderView: UIView {
+final class DetailScreenSectionHeaderView: UIView {
     
     // MARK: - Views
     
@@ -32,7 +32,7 @@ final class SectionHeaderView: UIView {
         return button
     }()
     
-    weak var delegate: SectionHeaderViewDelegate?
+    weak var delegate: DetailScreenSectionHeaderViewDelegate?
     
     // MARK: - Init
     
@@ -55,7 +55,7 @@ final class SectionHeaderView: UIView {
     // MARK: - Setup Views
     
     private func setupView() {
-        fill(with: stackView, edges: .init(top: 0, left: 16, bottom: 16, right: 16))
+        fill(with: stackView, edges: .init(top: 0, left: 16, bottom: 0, right: 16))
         backgroundColor = .clear
 
     }

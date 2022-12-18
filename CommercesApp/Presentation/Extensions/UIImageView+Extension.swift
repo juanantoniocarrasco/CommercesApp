@@ -10,7 +10,6 @@ extension UIImageView {
         return activityIndicator
     }
     
-    /// Asynchronous downloading and setting the image from the provided urlString
     func setImageFrom(_ urlString: String, completion: (() -> Void)? = nil) {
         guard let url = URL(string: urlString) else { return }
         
@@ -22,19 +21,16 @@ extension UIImageView {
         }
         
         let downloadImageTask = session.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                if let imageData = data {
-                    DispatchQueue.main.async {[weak self] in
-                        var image = UIImage(data: imageData)
-                        self?.image = nil
-                        self?.image = image
-                        image = nil
-                        completion?()
-                    }
-                }
+            
+            guard let data else { return }
+            
+            DispatchQueue.main.async { [weak self] in
+                var image = UIImage(data: data)
+                self?.image = image
+                image = nil
+                completion?()
             }
+            
             DispatchQueue.main.async {
                 activityIndicator.stopAnimating()
                 activityIndicator.removeFromSuperview()

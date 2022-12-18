@@ -1,3 +1,6 @@
 protocol DetailScreenViewModelProtocol {
-    func getCommerceLocation() -> [Double]
+    var state: Observable<DetailScreenViewModel.State?> { get }
+    
+    func viewDidLoad()
+    func locationButtonTapped()
 }

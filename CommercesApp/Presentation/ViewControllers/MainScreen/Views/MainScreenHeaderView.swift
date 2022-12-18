@@ -36,13 +36,13 @@ final class MainScreenHeaderView: UIView {
         return stackView
     }()
     
-    private let leftInfoView: InfoView = {
-        let view = InfoView(style: .dark)
+    private let leftInfoView: MainScreenInfoView = {
+        let view = MainScreenInfoView(style: .dark)
         return view
     }()
     
-    private let rightInfoView: InfoView = {
-        let view = InfoView(style: .light)
+    private let rightInfoView: MainScreenInfoView = {
+        let view = MainScreenInfoView(style: .light)
         return view
     }()
     

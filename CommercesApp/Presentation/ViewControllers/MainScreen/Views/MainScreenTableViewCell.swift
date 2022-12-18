@@ -32,7 +32,7 @@ final class MainScreenTableViewCellView: UIView {
     
     struct Model {
         let category: CommerceCategory
-        let distance: String
+        let distance: String?
         let photo: String
         let title: String
         let bodyTitle: String

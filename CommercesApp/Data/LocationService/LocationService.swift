@@ -39,17 +39,6 @@ final class LocationService: NSObject {
         locationManager.stopUpdatingLocation()
     }
     
-    func map(_ coordinates: [Double]) -> CLLocation? {
-        guard
-            let latitude = coordinates.last,
-            let longitude = coordinates.first
-        else {
-            return nil
-        }
-        return .init(latitude: latitude,
-                     longitude: longitude)
-    }
-    
 }
 
 // MARK: - CLLocationManagerDelegate

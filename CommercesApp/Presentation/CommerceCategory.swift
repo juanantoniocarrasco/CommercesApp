@@ -12,19 +12,19 @@ enum CommerceCategory: String, CaseIterable {
     var color: UIColor {
         switch self {
             case .gasStation:
-                return .orange
+                return .gasStationColor
             case .restaurant:
                 return .restaurantColor
             case .leisure:
                 return .leisureColor
             case .shopping:
-                return .systemPink
+                return .shoppingColor
             case .electricStation:
-                return .systemBlue
+                return .electricStationColor
             case .directSales:
-                return .systemGreen
+                return .directSalesColor
             case .beauty:
-                return .systemPurple
+                return .beautyColor
         }
     }
     

@@ -1,6 +1,6 @@
 import UIKit
 
-final class InfoView: UIView {
+final class MainScreenInfoView: UIView {
     
     enum Style {
         case light
