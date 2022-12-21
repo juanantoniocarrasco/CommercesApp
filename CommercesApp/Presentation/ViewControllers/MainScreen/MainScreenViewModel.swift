@@ -11,13 +11,13 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     var state: Observable<State?> = .init(wrappedValue: nil)
 
     private let apiService: ApiServiceProtocol
-    private let locationService: LocationService
+    private let locationService: LocationServiceProtocol
 
     private var commerceList: [Commerce] = []
     private var filteredCommerceList: [Commerce] = []
 
     init(apiService: ApiServiceProtocol,
-         locationService: LocationService) {
+         locationService: LocationServiceProtocol) {
         self.apiService = apiService
         self.locationService = locationService
     }
@@ -60,7 +60,6 @@ private extension MainScreenViewModel {
     
     func setupLocationService() {
         locationService.startUpdatingLocation()
-        locationService.delegate = self
     }
     
     func getCommerces() {

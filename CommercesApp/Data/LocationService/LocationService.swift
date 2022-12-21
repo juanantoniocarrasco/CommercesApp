@@ -5,7 +5,7 @@ protocol LocationServiceDelegate: AnyObject {
     func tracingLocationDidFailWithError(_ error: Error)
 }
 
-final class LocationService: NSObject {
+final class LocationService: NSObject, LocationServiceProtocol {
     
     static let shared = LocationService()
     

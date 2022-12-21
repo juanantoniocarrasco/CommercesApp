@@ -38,6 +38,7 @@
 		987DA5A4294F8F590065426C /* Commerce+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987DA5A3294F8F590065426C /* Commerce+Location.swift */; };
 		98A9D572294FA4FB0056034E /* DetailScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9D571294FA4FB0056034E /* DetailScreenViewModel.swift */; };
 		98A9D574294FA5020056034E /* DetailScreenViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A9D573294FA5020056034E /* DetailScreenViewModelProtocol.swift */; };
+		98BD137C2953169700F6FD50 /* LocationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD137B2953169700F6FD50 /* LocationServiceProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		987DA5A3294F8F590065426C /* Commerce+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Commerce+Location.swift"; sourceTree = "<group>"; };
 		98A9D571294FA4FB0056034E /* DetailScreenViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailScreenViewModel.swift; sourceTree = "<group>"; };
 		98A9D573294FA5020056034E /* DetailScreenViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailScreenViewModelProtocol.swift; sourceTree = "<group>"; };
+		98BD137B2953169700F6FD50 /* LocationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				987DA59B294CD2800065426C /* LocationService.swift */,
+				98BD137B2953169700F6FD50 /* LocationServiceProtocol.swift */,
 			);
 			path = LocationService;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				987DA59E294DDD150065426C /* UIImageView+Extension.swift in Sources */,
 				98660CE5294A275E00EC85E4 /* CommerceCategory.swift in Sources */,
 				987DA593294C6C650065426C /* UIColor+Extension.swift in Sources */,
+				98BD137C2953169700F6FD50 /* LocationServiceProtocol.swift in Sources */,
 				98581B492949D979005E24FE /* AppDelegate.swift in Sources */,
 				9804B43F2949E8980081FF7D /* Commerce.swift in Sources */,
 				9804B456294A090F0081FF7D /* Observable.swift in Sources */,

@@ -46,7 +46,6 @@ final class DetailScreenViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel: DetailScreenViewModelProtocol
-    private let locationService = LocationService.shared
 
     // MARK: - Initialization
     
@@ -61,7 +60,6 @@ final class DetailScreenViewController: UIViewController {
         
     override func loadView() {
         super.loadView()
-        setupLocationService()
         setupUI()
         bind()
         viewModel.viewDidLoad()
@@ -93,8 +91,8 @@ private extension DetailScreenViewController {
                         self?.aboutView.configure(with: aboutText)
                     }
                     self?.updateTableView()
-                case .locationButtonTapped(let commerce):
-                    self?.openInMapApp(commerce)
+                case .locationButtonTapped(let commerce, let lastLocation):
+                    self?.openInMapApp(commerce, lastLocation: lastLocation)
             }
         }
     }
@@ -102,7 +100,7 @@ private extension DetailScreenViewController {
     func getModelForAboutView(for commerce: Commerce) -> String {
         let firstText = commerce.openingHours.isEmpty
         ? "Horario no disponible para este comercio"
-        : commerce.openingHours
+        : "Horario " + commerce.openingHours
         
         guard
             let cashback = commerce.cashback,
@@ -124,13 +122,9 @@ private extension DetailScreenViewController {
               coordinate: commerce.locationCoordinate)
     }
     
-    func setupLocationService() {
-        locationService.startUpdatingLocation()
-    }
-    
-    func openInMapApp(_ commerce: Commerce) {
+    func openInMapApp(_ commerce: Commerce, lastLocation: CLLocation?) {
         guard
-            let sourceCoordinate = locationService.lastLocation?.coordinate,
+            let sourceCoordinate = lastLocation?.coordinate,
             let destinationCoordinate = commerce.locationCoordinate
         else {
             return
