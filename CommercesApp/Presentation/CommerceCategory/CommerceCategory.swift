@@ -58,11 +58,11 @@ enum CommerceCategory: CaseIterable {
             case .shopping:
                 return UIImage(named: "Cart_colour")
             case .electricStation:
-                return UIImage(named: "Electric Scooter_colour")
+                return UIImage(named: "Electric Scooter_colour")?.withTintColor(.systemBlue)
             case .directSales:
-                return UIImage(named: "Truck_colour")
+                return UIImage(named: "Truck_colour")?.withTintColor(.systemGreen)
             case .beauty:
-                return UIImage(named: "Car wash_colour")
+                return UIImage(named: "Car wash_colour")?.withTintColor(.systemPurple)
         }
     }
     

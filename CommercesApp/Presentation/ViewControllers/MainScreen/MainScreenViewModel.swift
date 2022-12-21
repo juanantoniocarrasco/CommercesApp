@@ -28,7 +28,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     
     func categorySelected(_ categorySelected: CommerceCategory,
                           isCurrentCategory: Bool) {
-        if isCurrentCategory  {
+        if isCurrentCategory {
             filteredCommerceList = []
             state.wrappedValue = .commerceListLoaded(commerceList: commerceList)
             return
@@ -122,7 +122,7 @@ private extension MainScreenViewModel {
     }
 
     func getRoundedDistanceInString(distance: Double?) -> String? {
-        guard let distance else {return nil }
+        guard let distance else { return nil }
         
         let roundedDistance = Double(round(10 * distance) / 10)
         let distanceString = "\(roundedDistance) km"
@@ -173,6 +173,7 @@ extension MainScreenViewModel {
 // MARK: - LocationServiceDelegate
 
 extension MainScreenViewModel: LocationServiceDelegate {
+    
     func tracingLocation(_ currentLocation: CLLocation) {
         getCommerces()
     }

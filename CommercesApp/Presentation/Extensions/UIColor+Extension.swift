@@ -43,7 +43,7 @@ extension UIColor {
     }
     
     static var shoppingColor: UIColor {
-        .systemPink
+        .init(rgb: 0xb82c5c)
     }
     
     static var electricStationColor: UIColor {

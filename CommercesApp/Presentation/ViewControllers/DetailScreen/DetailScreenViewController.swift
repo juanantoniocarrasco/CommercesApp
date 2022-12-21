@@ -78,21 +78,21 @@ private extension DetailScreenViewController {
     
     func bind() {
         viewModel.state.observe(on: self) { [weak self] state in
-            guard let state else { return }
+            guard let state,
+                  let self else { return }
             
             switch state {
                 case .loaded(let commerce):
-                    self?.title = commerce.name
-                    self?.imageView.setImageFrom(commerce.photo)
-                    if let model = self?.getModelForLocationView(for: commerce) {
-                        self?.locationView.configure(with: model)
-                    }
-                    if let aboutText = self?.getModelForAboutView(for: commerce) {
-                        self?.aboutView.configure(with: aboutText)
-                    }
-                    self?.updateTableView()
+                    self.title = commerce.name
+                    self.imageView.setImageFrom(commerce.photo)
+                    let model = self.getModelForLocationView(for: commerce)
+                    self.locationView.configure(with: model)
+                    let aboutText = self.getModelForAboutView(for: commerce)
+                    self.aboutView.configure(with: aboutText)
+                    
+                    self.updateTableView()
                 case .locationButtonTapped(let commerce, let lastLocation):
-                    self?.openInMapApp(commerce, lastLocation: lastLocation)
+                    self.openInMapApp(commerce, lastLocation: lastLocation)
             }
         }
     }
@@ -100,7 +100,7 @@ private extension DetailScreenViewController {
     func getModelForAboutView(for commerce: Commerce) -> String {
         let firstText = commerce.openingHours.isEmpty
         ? "Horario no disponible para este comercio"
-        : "Horario " + commerce.openingHours
+        : "Horario:" + commerce.openingHours
         
         guard
             let cashback = commerce.cashback,

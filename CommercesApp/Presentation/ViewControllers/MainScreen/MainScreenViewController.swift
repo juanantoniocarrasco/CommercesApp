@@ -31,12 +31,13 @@ final class MainScreenViewController: UIViewController {
         return tableView
     }()
     
+    private let spinnerViewController = SpinnerViewController()
+    
     // MARK: - Properties
     
     var currentCategory: CommerceCategory?
 
     private let viewModel: MainScreenViewModelProtocol
-    private let spinnerViewController = SpinnerViewController()
 
     // MARK: - Initialization
     
@@ -75,15 +76,16 @@ private extension MainScreenViewController {
     
     func bind() {
         viewModel.state.observe(on: self) { [weak self] state in
-            guard let state else { return }
-            
+            guard let state,
+                  let self else { return }
+
             switch state {
                 case .commerceListLoaded(let commerceList):
-                    self?.headerView.configure(with: commerceList)
-                    self?.updateTableView()
-                    self?.removeSpinner()
+                    self.headerView.configure(with: commerceList)
+                    self.updateTableView()
+                    self.removeSpinner()
                 case .tableCellSelected(for: let commerce):
-                    self?.navigateToDetailScreen(with: commerce)
+                    self.navigateToDetailScreen(with: commerce)
             }
         }
     }
@@ -148,10 +150,10 @@ extension MainScreenViewController: UITableViewDelegate {
 extension MainScreenViewController: MainScreenHeaderViewDelegate {
     
     func categorySelected(_ categorySelected: CommerceCategory) {
-        let isCurrentCategory = categorySelected == self.currentCategory
+        let isCurrentCategory = categorySelected == currentCategory
         viewModel.categorySelected(categorySelected,
                                    isCurrentCategory: isCurrentCategory)
-        self.currentCategory = isCurrentCategory
+        currentCategory = isCurrentCategory
         ? nil
         : categorySelected
         scrollToTop()
