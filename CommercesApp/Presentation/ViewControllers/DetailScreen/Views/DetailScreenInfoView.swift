@@ -126,7 +126,6 @@ final class DetailScreenLocationView: UIView {
         footerLabel.text = model.footer
         imageView.setImageFrom(model.photo)
         renderMapView(with: model.coordinate)
-        
     }
 
 }

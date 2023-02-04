@@ -1,42 +1,22 @@
 import UIKit
+import Kingfisher
 
 extension UIImageView {
     
-    private var activityIndicator: UIActivityIndicatorView {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = .black
-        center(view: activityIndicator)
-        return activityIndicator
-    }
+    private static let placeholderCommerceImage = UIImage(named: "only image")
     
-    func setImageFrom(_ urlString: String, completion: (() -> Void)? = nil) {
-        guard let url = URL(string: urlString) else { return }
-        
-        let session = URLSession(configuration: .default)
-        let activityIndicator = self.activityIndicator
-        
-        DispatchQueue.main.async {
-            activityIndicator.startAnimating()
-        }
-        
-        let downloadImageTask = session.dataTask(with: url) { (data, response, error) in
-            
-            guard let data else { return }
-            
-            DispatchQueue.main.async { [weak self] in
-                var image = UIImage(data: data)
-                self?.image = image
-                image = nil
-                completion?()
+    func setImageFrom(_ urlString: String) {
+        let url = URL(string: urlString)
+        kf.indicatorType = .activity
+        kf.setImage(with: url) { result in
+            switch result {
+                case .success(_):
+                    break
+                case .failure(_):
+                    DispatchQueue.main.async { [weak self] in
+                        self?.image = Self.placeholderCommerceImage
+                    }
             }
-            
-            DispatchQueue.main.async {
-                activityIndicator.stopAnimating()
-                activityIndicator.removeFromSuperview()
-            }
-            session.finishTasksAndInvalidate()
         }
-        downloadImageTask.resume()
     }
 }

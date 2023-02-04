@@ -100,7 +100,7 @@ private extension DetailScreenViewController {
     func getModelForAboutView(for commerce: Commerce) -> String {
         let firstText = commerce.openingHours.isEmpty
         ? "Horario no disponible para este comercio"
-        : "Horario:" + commerce.openingHours
+        : "Horario: " + commerce.openingHours
         
         guard
             let cashback = commerce.cashback,
