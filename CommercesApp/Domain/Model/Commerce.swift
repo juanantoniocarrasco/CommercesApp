@@ -31,7 +31,7 @@ struct Commerce: Codable {
         
     }
     
-    func updateDistanceToUser(_ distanceToUser: Double) -> Commerce {
+    func updateDistanceToUser(_ distanceToUser: Double?) -> Commerce {
         .init(photo: photo,
               name: name,
               category: category,
